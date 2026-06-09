@@ -101,7 +101,7 @@ android {
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.lagradost.debug"
+        applicationId = "com.lagradost.cloudstream3.debug"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = libs.versions.versionCode.get().toInt()
@@ -199,7 +199,7 @@ android {
         }
     }
 
-    namespace = "com.lagradost.debug"
+    namespace = "com.lagradost.cloudstream3"
 }
 
 dependencies {
