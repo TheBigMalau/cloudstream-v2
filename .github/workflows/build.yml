@@ -26,23 +26,22 @@ jobs:
       - name: Sign APK
         run: |
           mkdir signed
-          # Génère un keystore temporaire
           keytool -genkeypair -alias key0 -keyalg RSA -keysize 2048 -validity 10000 \
             -dname "CN=Cloudstream" -keypass password -keystore key.jks -storepass password
 
-          # Trouve l’APK généré
           APK=$(find app/build/outputs/apk -name "*.apk" | head -n 1)
 
-          # Signature
           jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
             -keystore key.jks -storepass password -keypass password \
             "$APK" key0
 
-          # Aligne l’APK (obligatoire)
           zipalign -v 4 "$APK" signed/Cloudstream-Stable.apk
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
         with:
-          name: Cloudstream-Stable
-          path: signed/Cloudstream-Stable.apk
+          tag_name: stable
+          name: Cloudstream Stable Build
+          files: signed/Cloudstream-Stable.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
